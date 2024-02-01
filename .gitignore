@@ -1,0 +1,9 @@
+.vscode/
+obj/
+[B|b]in
+[O|o]bj
+bin/
+.vs/
+.DS_Store
+Dockerfile
+Dockerfile*
