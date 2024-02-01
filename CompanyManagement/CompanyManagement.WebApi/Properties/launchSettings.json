@@ -17,7 +17,8 @@
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "CONNECTION_STR": "Host=localhost; Database=company-management; Username=mubarak; Password=mubarak@123"
+        "CONNECTION_STR": "Host=localhost; Database=company-management; Username=mubarak; Password=mubarak@123",
+        "ApiKey": "mubarak"
       }
     }
   }

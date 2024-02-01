@@ -4,6 +4,8 @@ using CompanyManagement.Repository.Repository.Interface;
 using CompanyManagement.Service.Implementation;
 using CompanyManagement.Service.Interface;
 using CompanyManagement.Shared.Interface.Repository;
+using CompanyManagement.WebApi.Filter;
+using CompanyManagement.WebApi.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -28,6 +30,9 @@ builder.Services.AddCors(opt =>
 });
 
 builder.Services.AddDbContext<ManagementDbContext>();
+builder.Services.AddSingleton< ApiKeyAuthorizationFilter>();
+builder.Services.AddSingleton<IApiKeyValidator, ApiKeyValidator>();
+
 builder.Services.AddScoped<IIndustryRepository, IndustryRepository>();
 builder.Services.AddScoped<IIndustryService, IndustryService>();
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();

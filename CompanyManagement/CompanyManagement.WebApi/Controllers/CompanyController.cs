@@ -1,6 +1,7 @@
 ﻿using CompanyManagement.Service.Interface;
 using CompanyManagement.Shared.Dto;
 using CompanyManagement.Shared.Exceptions;
+using CompanyManagement.WebApi.Attribute;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,7 @@ namespace CompanyManagement.WebApi.Controllers
 {
     [Route("api/v1/company")]
     [ApiController]
+    [Auth]
     public class CompanyController : ControllerBase
     {
         private readonly ICompanyService _companyService;

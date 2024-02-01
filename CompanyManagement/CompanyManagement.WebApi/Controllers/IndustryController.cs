@@ -1,4 +1,5 @@
 ﻿using CompanyManagement.Service.Interface;
+using CompanyManagement.WebApi.Attribute;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,6 +7,7 @@ namespace CompanyManagement.WebApi.Controllers
 {
     [Route("api/v1/industry")]
     [ApiController]
+    [Auth]
     public class IndustryController : ControllerBase
     {
         private readonly IIndustryService _industryService;
