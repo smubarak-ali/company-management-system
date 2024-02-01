@@ -10,11 +10,11 @@ namespace CompanyManagement.Repository.Entity
     {
         public int Id { get; set; }
         public int CompanyNo { get; set; }
-        public required string CompanyName { get; set; }
+        public string CompanyName { get; set; }
         public int IndustryId { get; set; }
         public int TotalEmployees { get; set; }
         public string? City { get; set; }
-        public required string ParentCompany { get; set; }
+        public string ParentCompany { get; set; }
         public int Level { get; set; }
 
         // relationship

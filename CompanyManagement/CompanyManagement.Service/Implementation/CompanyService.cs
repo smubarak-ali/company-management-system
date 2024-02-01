@@ -2,11 +2,8 @@
 using CompanyManagement.Repository.Repository.Interface;
 using CompanyManagement.Service.Interface;
 using CompanyManagement.Shared.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using CompanyManagement.Shared.Exceptions;
+using CompanyManagement.Shared.Mapper;
 
 namespace CompanyManagement.Service.Implementation
 {
@@ -19,31 +16,55 @@ namespace CompanyManagement.Service.Implementation
             _companyRepository = companyRepository;
         }
 
-        public Task<CompanyDto?> GetById(int id)
+        public async Task<CompanyDto?> GetById(int id)
         {
-            throw new NotImplementedException();
+            var company = await _companyRepository.GetById(id);
+            return company?.ToDto();
         }
 
         public async Task<ICollection<CompanyDto>> GetCompanies()
         {
-            //var list = await _companyRepository.GetCompanies();
-            return null;
+            var list = await _companyRepository.GetCompanies();
+            return list.ToDto();
         }
 
         public async Task<ICollection<CompanyDropdownDto>> GetCompaniesForDropdown()
         {
             var list = await _companyRepository.GetCompaniesForDropdown();
-            return list.Select(x => new CompanyDropdownDto { Id = x.Id, Name = x.CompanyName }).ToList();
+            List<CompanyDropdownDto> dtoList = list.Select(x => new CompanyDropdownDto { Id = x.Id, Name = x.CompanyName }).ToList();
+            return dtoList;
         }
 
-        public Task<int> InsertCompany(CompanyDto company)
+        public async Task<int> InsertCompany(CompanyDto company)
         {
-            throw new NotImplementedException();
+            Company entity = new()
+            {
+                CompanyName = company.CompanyName,
+                City = company.City,
+                CompanyNo = company.CompanyNo,
+                IndustryId = company.IndustryId,
+                Level = company.Level,
+                ParentCompany = company.ParentCompany,
+                TotalEmployees = company.TotalEmployees
+            };
+
+            int id = await _companyRepository.SaveCompany(entity);
+            return id;
         }
 
-        public Task UpdateCompany(CompanyDto company)
+        public async Task UpdateCompany(int companyId, CompanyDto company)
         {
-            throw new NotImplementedException();
+            var entity = await _companyRepository.GetById(companyId) ?? throw new InvalidIdException("Invalid company Id provided");
+
+            entity.CompanyName = company.CompanyName;
+            entity.City = company.City;
+            entity.IndustryId = company.IndustryId;
+            entity.Level = company.Level;
+            entity.ParentCompany = company.ParentCompany;
+            entity.TotalEmployees = company.TotalEmployees;
+
+            await _companyRepository.UpdateCompany(companyId, entity);
+            return;
         }
     }
 }

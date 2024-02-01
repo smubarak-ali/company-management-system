@@ -2,11 +2,6 @@
 using CompanyManagement.Repository.Entity;
 using CompanyManagement.Repository.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CompanyManagement.Repository.Repository.Implementation
 {
@@ -31,13 +26,12 @@ namespace CompanyManagement.Repository.Repository.Implementation
         }
 
         /// <summary>
-        /// Created this method to only get the id and name for performance reasons.
-        /// Using dynamic here to allow for the flexibility of writing a simple select and mapping the object dynamically
+        /// Created this method to only get the id and name for performance reasons
         /// </summary>
-        /// <returns>ICollection<dynamic></returns>
-        public async Task<ICollection<dynamic>> GetCompaniesForDropdown()
+        /// <returns></returns>
+        public async Task<ICollection<Company>> GetCompaniesForDropdown()
         {
-            return await _dbContext.Company.Select(x => new { Id = x.Id, Name = x.CompanyName }).ToListAsync<dynamic>();
+            return await _dbContext.Company.Select(x => new Company { Id = x.Id, CompanyName = x.CompanyName }).ToListAsync();
         }
 
         public async Task<int> SaveCompany(Company company)
@@ -45,6 +39,16 @@ namespace CompanyManagement.Repository.Repository.Implementation
             await _dbContext.Company.AddAsync(company);
             await _dbContext.SaveChangesAsync();
             return company.Id;
+        }
+
+        public async Task UpdateCompany(int companyId, Company company)
+        {
+            Company? entity = await _dbContext.Company.Where(x => int.Equals(x.Id, companyId)).FirstOrDefaultAsync();
+
+            if (entity == null) return;
+
+            _dbContext.Entry(entity).CurrentValues.SetValues(company);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

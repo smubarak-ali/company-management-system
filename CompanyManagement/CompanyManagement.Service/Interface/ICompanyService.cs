@@ -13,7 +13,7 @@ namespace CompanyManagement.Service.Interface
         Task<CompanyDto?> GetById(int id);
         Task<ICollection<CompanyDto>> GetCompanies();
         Task<ICollection<CompanyDropdownDto>> GetCompaniesForDropdown();
-        Task UpdateCompany(CompanyDto company);
+        Task UpdateCompany(int companyId, CompanyDto company);
         Task<int> InsertCompany(CompanyDto company);
     }
 }

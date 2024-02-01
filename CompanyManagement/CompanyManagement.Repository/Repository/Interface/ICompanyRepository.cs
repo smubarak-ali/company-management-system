@@ -11,7 +11,8 @@ namespace CompanyManagement.Repository.Repository.Interface
     {
         Task<Company?> GetById(int id);
         Task<ICollection<Company>> GetCompanies();
-        Task<ICollection<dynamic>> GetCompaniesForDropdown();
+        Task<ICollection<Company>> GetCompaniesForDropdown();
         Task<int> SaveCompany(Company company);
+        Task UpdateCompany(int companyId, Company company);
     }
 }
