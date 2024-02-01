@@ -1,5 +1,6 @@
 using CompanyManagement.Repository.Context;
 using CompanyManagement.Repository.Repository.Implementation;
+using CompanyManagement.Repository.Repository.Interface;
 using CompanyManagement.Service.Implementation;
 using CompanyManagement.Service.Interface;
 using CompanyManagement.Shared.Interface.Repository;
@@ -29,6 +30,8 @@ builder.Services.AddCors(opt =>
 builder.Services.AddDbContext<ManagementDbContext>();
 builder.Services.AddScoped<IIndustryRepository, IndustryRepository>();
 builder.Services.AddScoped<IIndustryService, IndustryService>();
+builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
+builder.Services.AddScoped<ICompanyService, CompanyService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

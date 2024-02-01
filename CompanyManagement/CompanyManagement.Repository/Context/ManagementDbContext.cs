@@ -1,5 +1,7 @@
 ﻿using CompanyManagement.Repository.Entity;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
+using Serilog.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +18,7 @@ namespace CompanyManagement.Repository.Context
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
             builder.UseNpgsql(Environment.GetEnvironmentVariable("CONNECTION_STR"));
+            builder.LogTo(Console.WriteLine);
 
             base.OnConfiguring(builder);
         }

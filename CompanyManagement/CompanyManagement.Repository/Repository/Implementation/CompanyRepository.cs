@@ -19,15 +19,32 @@ namespace CompanyManagement.Repository.Repository.Implementation
             _dbContext = dbContext;
         }
 
+        public async Task<Company?> GetById(int id)
+        {
+            return await _dbContext.Company.Where(x => int.Equals(x.Id, id)).FirstOrDefaultAsync();
+        }
+
         public async Task<ICollection<Company>> GetCompanies()
         {
             var list = await _dbContext.Company.ToListAsync();
             return list;
         }
 
-        public async Task<ICollection<Company>> GetCompaniesForDropdown()
+        /// <summary>
+        /// Created this method to only get the id and name for performance reasons.
+        /// Using dynamic here to allow for the flexibility of writing a simple select and mapping the object dynamically
+        /// </summary>
+        /// <returns>ICollection<dynamic></returns>
+        public async Task<ICollection<dynamic>> GetCompaniesForDropdown()
         {
-            return await _dbContext.Company.ToListAsync();
+            return await _dbContext.Company.Select(x => new { Id = x.Id, Name = x.CompanyName }).ToListAsync<dynamic>();
+        }
+
+        public async Task<int> SaveCompany(Company company)
+        {
+            await _dbContext.Company.AddAsync(company);
+            await _dbContext.SaveChangesAsync();
+            return company.Id;
         }
     }
 }

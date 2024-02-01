@@ -24,5 +24,10 @@ namespace CompanyManagement.Shared.Mapper
 
             return dtoList;
         }
+
+        //public static List<CompanyDto> ToDto(this ICollection<Company> companyList)
+        //{
+
+        //}
     }
 }

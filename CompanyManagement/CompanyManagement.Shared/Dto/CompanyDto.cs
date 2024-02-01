@@ -18,4 +18,10 @@ namespace CompanyManagement.Shared.Dto
         public int Level { get; set; }
 
     }
+
+    public class CompanyDropdownDto
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
 }

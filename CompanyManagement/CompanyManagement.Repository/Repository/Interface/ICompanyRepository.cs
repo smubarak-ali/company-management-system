@@ -9,8 +9,9 @@ namespace CompanyManagement.Repository.Repository.Interface
 {
     public interface ICompanyRepository
     {
+        Task<Company?> GetById(int id);
         Task<ICollection<Company>> GetCompanies();
-        Task<ICollection<Company>> GetCompaniesForDropdown();
-
+        Task<ICollection<dynamic>> GetCompaniesForDropdown();
+        Task<int> SaveCompany(Company company);
     }
 }
