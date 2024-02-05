@@ -16,7 +16,7 @@ import { CompanyDto } from '../../utils/objects/Company';
 export class CompanyListComponent implements OnInit, OnDestroy {
 
   unsubDdlList!: Subscription;
-  displayedColumns: string[] = ['companyNo', 'companyName', 'industryId', 'totalEmployees', 'city', 'parentCompany', 'level'];
+  displayedColumns: string[] = ['companyNo', 'companyName', 'industryName', 'totalEmployees', 'city', 'parentCompany', 'level'];
   dataSource = new MatTableDataSource<CompanyDto>(undefined);
 
   constructor(private backendService: BackendService, private router: Router) {}

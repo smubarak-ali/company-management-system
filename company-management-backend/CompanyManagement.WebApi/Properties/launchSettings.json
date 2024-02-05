@@ -14,8 +14,9 @@
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "http://localhost:5000",
+      "applicationUrl": "http://localhost:5001",
       "environmentVariables": {
+        "ASPNETCORE_URLS": "http://localhost:5001",
         "ASPNETCORE_ENVIRONMENT": "Development",
         "CONNECTION_STR": "Host=localhost; Database=company-management; Username=mubarak; Password=mubarak@123",
         "ApiKey": "mubarak"

@@ -44,6 +44,9 @@ namespace CompanyManagement.Shared.Mapper
             dto.CompanyName = company.CompanyName;
             dto.Level = company.Level;
             dto.ParentCompany = company.ParentCompany;
+            if (company.Industry != null)
+                dto.IndustryName = company.Industry.IndustryName;
+            
             return dto;
         }
     }

@@ -20,6 +20,8 @@ namespace CompanyManagement.Shared.Dto
 
         public int IndustryId { get; set; }
 
+        public string? IndustryName { get; set; }
+
         [Range(1, 1000000)]
         public int TotalEmployees { get; set; }
 

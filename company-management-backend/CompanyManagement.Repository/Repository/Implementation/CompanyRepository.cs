@@ -16,12 +16,12 @@ namespace CompanyManagement.Repository.Repository.Implementation
 
         public async Task<Company?> GetById(int id)
         {
-            return await _dbContext.Company.Where(x => int.Equals(x.Id, id)).FirstOrDefaultAsync();
+            return await _dbContext.Company.Where(x => Equals(x.Id, id)).FirstOrDefaultAsync();
         }
 
         public async Task<ICollection<Company>> GetCompanies()
         {
-            var list = await _dbContext.Company.ToListAsync();
+            var list = await _dbContext.Company.Include(x => x.Industry).ToListAsync();
             return list;
         }
 
@@ -43,7 +43,7 @@ namespace CompanyManagement.Repository.Repository.Implementation
 
         public async Task UpdateCompany(int companyId, Company company)
         {
-            Company? entity = await _dbContext.Company.Where(x => int.Equals(x.Id, companyId)).FirstOrDefaultAsync();
+            Company? entity = await _dbContext.Company.Where(x => Equals(x.Id, companyId)).FirstOrDefaultAsync();
 
             if (entity == null) return;
 

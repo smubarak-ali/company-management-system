@@ -8,6 +8,7 @@ export interface CompanyDto {
     companyNo: number;
     companyName: string;
     industryId: number;
+    industryName: string;
     totalEmployees: number;
     city: string;
     parentCompany: string;
