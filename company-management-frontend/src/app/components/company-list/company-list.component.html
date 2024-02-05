@@ -1,1 +1,51 @@
-<p>company-list works!</p>
+<div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
+
+        <!-- Company No Column -->
+        <ng-container matColumnDef="companyNo">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let element"> {{element.companyNo}} </td>
+        </ng-container>
+
+        <!-- Company Name Column -->
+        <ng-container matColumnDef="companyName">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.companyName}} </td>
+        </ng-container>
+
+        <!-- Industry Column -->
+        <ng-container matColumnDef="industryId">
+            <th mat-header-cell *matHeaderCellDef> Industry </th>
+            <td mat-cell *matCellDef="let element"> {{element.industryId}} </td>
+        </ng-container>
+
+        <!-- Total Employees Column -->
+        <ng-container matColumnDef="totalEmployees">
+            <th mat-header-cell *matHeaderCellDef> Total Employees </th>
+            <td mat-cell *matCellDef="let element"> {{element.totalEmployees}} </td>
+        </ng-container>
+
+        <!-- City Column -->
+        <ng-container matColumnDef="city">
+            <th mat-header-cell *matHeaderCellDef> City </th>
+            <td mat-cell *matCellDef="let element"> {{element.city}} </td>
+        </ng-container>
+
+        <!-- Parent Company Column -->
+        <ng-container matColumnDef="parentCompany">
+            <th mat-header-cell *matHeaderCellDef> Parent Company </th>
+            <td mat-cell *matCellDef="let element"> {{element.parentCompany}} </td>
+        </ng-container>
+
+        <!-- Level Company Column -->
+        <ng-container matColumnDef="level">
+            <th mat-header-cell *matHeaderCellDef> Level </th>
+            <td mat-cell *matCellDef="let element"> {{element.level}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <button (click)="goToSave()">Go to Save</button>
+</div>
