@@ -1,0 +1,12 @@
+FROM mcr.microsoft.com/dotnet/sdk:8.0 as build-env
+WORKDIR /app
+COPY ./company-management-backend .
+RUN cd CompanyManagement.WebApi && dotnet publish -c Release -o ../publish
+
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+WORKDIR /app
+COPY --from=build-env /app/publish .
+EXPOSE 8080
+CMD ["dotnet", "CompanyManagement.WebApi.dll"]
+
+#docker run -d -e POSTGRES_DB=company-management -e POSTGRES_USER=mubarak -e POSTGRES_PASSWORD=mubarak@123 -e PGDATA=/var/lib/postgresql/data/pgdata -e PGPORT=5432 -e POSTGRES_HOST_AUTH_METHOD=md5 -p 5432:5432 --name db postgres:16-alpine

@@ -1,0 +1,19 @@
+FROM node:20-alpine as build-env
+WORKDIR /app
+COPY company-management-frontend/package.json company-management-frontend/package-lock* ./
+# This below is for the node-gyp dependency install
+RUN apk add --no-cache libc6-compat gcompat
+RUN npm i
+COPY ./company-management-frontend .
+ENV NODE_ENV=production
+RUN npm run build
+
+
+FROM nginxinc/nginx-unprivileged:latest
+WORKDIR /app
+COPY --from=build-env /app/custom.conf /etc/nginx/conf.d/custom.conf
+COPY --from=build-env /app/dist/company-management-frontend /usr/share/nginx/html/
+EXPOSE 8081
+CMD ["/bin/sh", "-c", "exec nginx -g 'daemon off;'"]
+
+#docker run -d -e POSTGRES_DB=company-management -e POSTGRES_USER=mubarak -e POSTGRES_PASSWORD=mubarak@123 -e PGDATA=/var/lib/postgresql/data/pgdata -e PGPORT=5432 -e POSTGRES_HOST_AUTH_METHOD=md5 -p 5432:5432 --name db postgres:16-alpine

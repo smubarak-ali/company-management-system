@@ -15,7 +15,7 @@ namespace CompanyManagement.Repository.Extensions
         public PaginatedList(List<T> items, int count, int pageIndex, int pageSize)
         {
             PageIndex = pageIndex;
-            TotalPages = (int)Math.Ceiling(count / (double)pageSize);
+            TotalPages = count;
 
             AddRange(items);
         }

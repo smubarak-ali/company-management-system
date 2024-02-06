@@ -35,5 +35,4 @@ obj/
 bin/
 .vs/
 .DS_Store
-Dockerfile
-Dockerfile*
+db/

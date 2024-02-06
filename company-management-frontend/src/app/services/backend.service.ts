@@ -24,7 +24,6 @@ export class BackendService {
     if (criteria.pageIndex) endpoint += `pageIndex=${criteria.pageIndex}&`;
     if (criteria.pageSize) endpoint += `pageSize=${criteria.pageSize}&`;
     endpoint += `sortByCompanyNameDesc=${criteria.sortByCompanyNameDesc}&`;
-    console.log(" endpoint: ", endpoint);
     return this.http.get<ApiPaginationResponse<CompanyDto>>(endpoint);
   }
 
