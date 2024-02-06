@@ -1,4 +1,5 @@
-﻿using CompanyManagement.Service.Interface;
+﻿using CompanyManagement.Criteria;
+using CompanyManagement.Service.Interface;
 using CompanyManagement.Shared.Dto;
 using CompanyManagement.Shared.Exceptions;
 using CompanyManagement.WebApi.Attribute;
@@ -22,12 +23,25 @@ namespace CompanyManagement.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetCompanies()
+        public async Task<IActionResult> GetCompanies([FromQuery] int? companyNo, [FromQuery] string? companyName, [FromQuery] int? industryId, 
+               [FromQuery] string? city, [FromQuery] string? parentCompany, [FromQuery] bool sortByCompanyNameDesc = false, [FromQuery] int pageIndex = 1, [FromQuery] int pageSize = 5)
         {
             try
             {
-                var list = await _companyService.GetCompanies();
-                return Ok(list);
+                CompanySearchCriteria criteria = new()
+                {
+                    PageIndex = pageIndex,
+                    PageSize = pageSize,
+                    City = city,
+                    CompanyName = companyName,
+                    ParentCompany = parentCompany,
+                    CompanyNo = companyNo,
+                    IndustryId = industryId,
+                    CompanyNameDesc = sortByCompanyNameDesc
+                };
+
+                var list = await _companyService.GetCompanies(criteria);
+                return Ok(new { Items = list.Items, TotalPages = list.TotalPages });
             }
             catch (Exception ex)
             {
@@ -35,6 +49,22 @@ namespace CompanyManagement.WebApi.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetCompanyById(int id)
+        {
+            try
+            {
+                var comp = await _companyService.GetById(id);
+                return Ok(comp);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return BadRequest();
+            }
+        }
+
 
         [HttpGet("ddl")]
         public async Task<IActionResult> GetCompaniesForDropdown()

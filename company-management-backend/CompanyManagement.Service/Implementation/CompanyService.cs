@@ -1,9 +1,11 @@
-﻿using CompanyManagement.Repository.Entity;
+﻿using CompanyManagement.Criteria;
+using CompanyManagement.Repository.Entity;
 using CompanyManagement.Repository.Repository.Interface;
 using CompanyManagement.Service.Interface;
 using CompanyManagement.Shared.Dto;
 using CompanyManagement.Shared.Exceptions;
 using CompanyManagement.Shared.Mapper;
+using CompanyManagement.Shared.Model;
 
 namespace CompanyManagement.Service.Implementation
 {
@@ -22,10 +24,13 @@ namespace CompanyManagement.Service.Implementation
             return company?.ToDto();
         }
 
-        public async Task<ICollection<CompanyDto>> GetCompanies()
+        public async Task<PaginatedResponse<CompanyDto>> GetCompanies(CompanySearchCriteria criteria)
         {
-            var list = await _companyRepository.GetCompanies();
-            return list.ToDto();
+            var list = await _companyRepository.GetCompanies(criteria);
+            PaginatedResponse<CompanyDto> responseList = new();
+            responseList.TotalPages = list.TotalPages;
+            responseList.Items = list.ToDto();
+            return responseList;
         }
 
         public async Task<ICollection<CompanyDropdownDto>> GetCompaniesForDropdown()
@@ -43,7 +48,7 @@ namespace CompanyManagement.Service.Implementation
                 City = company.City,
                 CompanyNo = company.CompanyNo,
                 IndustryId = company.IndustryId,
-                Level = company.Level,
+                Level = (!string.IsNullOrEmpty(company.ParentCompany) && !string.Equals(company.ParentCompany, "none", StringComparison.OrdinalIgnoreCase) ? 1 : 0),
                 ParentCompany = company.ParentCompany,
                 TotalEmployees = company.TotalEmployees
             };

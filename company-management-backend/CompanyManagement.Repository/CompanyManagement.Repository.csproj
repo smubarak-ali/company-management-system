@@ -12,5 +12,9 @@
     <PackageReference Include="Serilog" Version="3.1.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CompanyManagement.Criteria\CompanyManagement.Criteria.csproj" />
+  </ItemGroup>
+
 
 </Project>
