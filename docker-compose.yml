@@ -10,7 +10,7 @@ services:
       db:
         condition: service_healthy
     ports:
-      - "5000:8080"
+      - "8080:8080"
     networks:
       - dev_network
     environment:
