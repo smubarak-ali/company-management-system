@@ -1,0 +1,42 @@
+
+<div>
+    <mat-form-field appearance="outline">
+        <mat-label>Company no.</mat-label>
+        <input matInput #input type="number" (change)="onCompanyNoChange($event)">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Company name</mat-label>
+        <input matInput #input maxlength="50" (change)="onCompanyNameChange($event)">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Industry</mat-label>
+        <mat-select (selectionChange)="onIndustryChange($event)">
+            <mat-option [value]="0">Please Select</mat-option>
+            @for (industry of industryList; track industry;) {
+            <mat-option [value]="industry.id">{{industry.name}}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Number of employees</mat-label>
+        <input matInput #input type="number" (change)="onTotalEmployeeChange($event)">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>City</mat-label>
+        <input matInput #input (change)="onCityChange($event)">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Parent company</mat-label>
+        <mat-select (selectionChange)="onParentCompanyChange($event)">
+            <mat-option [value]='"None"'>None</mat-option>
+            @for (comp of companyList; track comp;) {
+            <mat-option [value]="comp.name">{{comp.name}}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+</div>

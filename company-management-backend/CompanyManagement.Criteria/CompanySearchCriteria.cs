@@ -13,6 +13,7 @@ namespace CompanyManagement.Criteria
         public int? IndustryId { get; set; }
         public string? City { get; set; }
         public string? ParentCompany { get; set; }
+        public int? TotalEmployees { get; set; }
 
         public bool CompanyNameDesc { get; set; } = false;
         public int PageIndex { get; set; } = 1;

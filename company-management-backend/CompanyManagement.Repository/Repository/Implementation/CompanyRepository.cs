@@ -26,11 +26,11 @@ namespace CompanyManagement.Repository.Repository.Implementation
             var companies = _dbContext.Company.Include(x => x.Industry).Select(x => x);
             if (!string.IsNullOrEmpty(criteria.ParentCompany))
             {
-                companies = companies.Where(x => x.ParentCompany.Contains(criteria.ParentCompany, StringComparison.OrdinalIgnoreCase));
+                companies = companies.Where(x => x.ParentCompany.ToLower().Contains(criteria.ParentCompany.ToLower()));
             }
             if (!string.IsNullOrEmpty(criteria.CompanyName))
             {
-                companies = companies.Where(x => x.CompanyName.Contains(criteria.CompanyName, StringComparison.OrdinalIgnoreCase));
+                companies = companies.Where(x => x.CompanyName.ToLower().Contains(criteria.CompanyName.ToLower()));
             }
             if (criteria.IndustryId != null)
             {
@@ -42,9 +42,13 @@ namespace CompanyManagement.Repository.Repository.Implementation
             }
             if (!string.IsNullOrEmpty(criteria.City))
             {
-                companies = companies.Where(x => x.City.Contains(criteria.City, StringComparison.OrdinalIgnoreCase));
+                companies = companies.Where(x => x.City.ToLower().Contains(criteria.City.ToLower()));
             }
-            
+            if (criteria.TotalEmployees != null)
+            {
+                companies = companies.Where(x => x.TotalEmployees.Equals(criteria.TotalEmployees));
+            }
+
             companies = criteria.CompanyNameDesc ? companies.OrderByDescending(x => x.CompanyName) : companies.OrderBy(x => x.CompanyName);
 
 

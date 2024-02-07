@@ -5,6 +5,7 @@ export interface CompanySearchCriteria {
     industryId?: number;
     city?: string;
     parentCompany?: string;
+    totalEmployees?: number;
     sortByCompanyNameDesc: boolean;
     pageIndex?: number;
     pageSize?: number;

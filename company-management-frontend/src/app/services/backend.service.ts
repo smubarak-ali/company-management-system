@@ -20,6 +20,7 @@ export class BackendService {
     if (criteria.companyName) endpoint += `companyName=${criteria.companyName}&`;
     if (criteria.companyNo) endpoint += `companyNo=${criteria.companyNo}&`;
     if (criteria.industryId) endpoint += `industryId=${criteria.industryId}&`;
+    if (criteria.totalEmployees) endpoint += `totalEmployees=${criteria.totalEmployees}&`;
     if (criteria.parentCompany) endpoint += `parentCompany=${criteria.parentCompany}&`;
     if (criteria.pageIndex) endpoint += `pageIndex=${criteria.pageIndex}&`;
     if (criteria.pageSize) endpoint += `pageSize=${criteria.pageSize}&`;

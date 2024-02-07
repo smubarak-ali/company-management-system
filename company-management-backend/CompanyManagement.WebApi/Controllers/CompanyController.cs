@@ -24,7 +24,8 @@ namespace CompanyManagement.WebApi.Controllers
 
         [HttpGet]
         public async Task<IActionResult> GetCompanies([FromQuery] int? companyNo, [FromQuery] string? companyName, [FromQuery] int? industryId, 
-               [FromQuery] string? city, [FromQuery] string? parentCompany, [FromQuery] bool sortByCompanyNameDesc = false, [FromQuery] int pageIndex = 1, [FromQuery] int pageSize = 5)
+               [FromQuery] string? city, [FromQuery] string? parentCompany, [FromQuery] int? totalEmployees, [FromQuery] bool sortByCompanyNameDesc = false,
+               [FromQuery] int pageIndex = 1, [FromQuery] int pageSize = 5)
         {
             try
             {
@@ -37,7 +38,8 @@ namespace CompanyManagement.WebApi.Controllers
                     ParentCompany = parentCompany,
                     CompanyNo = companyNo,
                     IndustryId = industryId,
-                    CompanyNameDesc = sortByCompanyNameDesc
+                    CompanyNameDesc = sortByCompanyNameDesc,
+                    TotalEmployees = totalEmployees
                 };
 
                 var list = await _companyService.GetCompanies(criteria);
