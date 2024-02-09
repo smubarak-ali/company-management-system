@@ -1,7 +1,11 @@
-div#table {
-    overflow-x: auto;
-}
+article {
+    --block-spacing-vertical: 10px;
 
-a {
-    margin-top: 1.5em;
+    th {
+        --font-size: 16px;
+    }
+
+    td {
+        --font-size: 15px;
+    }
 }
