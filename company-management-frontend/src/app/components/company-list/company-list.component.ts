@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { CompanySearchFilterComponent } from '../company-search-filter/company-search-filter.component';
+
 @Component({
   selector: 'app-company-list',
   standalone: true,

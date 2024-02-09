@@ -1,0 +1,11 @@
+article {
+    @media (min-width: 1200px) {
+        width: 40%;
+        margin: 0 auto;
+    }
+
+    @media (min-width: 992px) {
+        width: 60%;
+        margin: 0 auto;
+    }
+}

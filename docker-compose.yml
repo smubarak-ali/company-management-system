@@ -39,6 +39,8 @@ services:
       dockerfile: Dockerfile_WebApp
     container_name: comp_management_web_app
     restart: always
+    volumes:
+      -  /c/codes/arvato/db:/var/lib/postgresql/data:rw
     ports:
       - "8081:8081"
     networks:

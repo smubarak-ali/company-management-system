@@ -1,7 +1,7 @@
 <app-company-search-filter [companyNo]="companyNo" [companyName]="companyName" [industryId]="industryId" [city]="city" [parentCompany]="parentCompany" [totalEmployees]="totalEmployees"></app-company-search-filter>
 
 @if (isLoadingResults === true) {
-    <mat-spinner></mat-spinner>
+    <div aria-busy="true"></div>
 }
 @if (dataSource.data.length <= 0) { <div>
     No companies found
