@@ -2,8 +2,9 @@
     [parentCompany]="parentCompany" [totalEmployees]="totalEmployees"></app-company-search-filter> -->
 
 @if (isLoadingResults === true) {
-<div aria-busy="true"></div>
+<span aria-busy="true"></span>
 }
+
 @if (items.length <= 0) { <div>
     No companies found
     </div>
@@ -34,9 +35,14 @@
                     }
                 </tbody>
             </table>
+
         </figure>
+        <div class="pagination">
+            <a class="contrast" href="#" role="button" (click)="decrementPageIndex($event)">Prev</a>
+            <a class="contrast" href="#" role="button" (click)="incrementPageIndex($event)">Next</a>
+        </div>
     </article>
     }
 
 
-    <!-- <a role="button" routerLink="/save">New company</a> -->
+    <a role="button" class="secondary" routerLink="/dashboard/save">New company</a>

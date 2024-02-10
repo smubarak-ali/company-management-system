@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, effect, signal } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, computed, effect, signal } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Router, RouterLink } from '@angular/router';
 
@@ -16,12 +16,15 @@ import { CompanySearchFilterComponent } from '../company-search-filter/company-s
 })
 export class CompanyListComponent implements OnInit, OnDestroy {
 
-  sortByCompanyNameDesc = false;
+  private PAGE_SIZE = 5;
+  private pageIndex$ = signal(1);
+  unsubDdlList!: Subscription;
+  
+  items: CompanyDto[];
   totalCount = 0;
   isLoadingResults = true;
-  unsubDdlList!: Subscription;
-  // displayedColumns: string[] = ['companyNo', 'companyName', 'industryName', 'totalEmployees', 'city', 'parentCompany', 'level'];
-  items: CompanyDto[];
+  sortByCompanyNameDesc = false;
+  pageIndex = computed(() => this.pageIndex$());
   
   companyNo = signal<number|undefined>(undefined);
   companyName = signal<string|undefined>(undefined);
@@ -33,12 +36,12 @@ export class CompanyListComponent implements OnInit, OnDestroy {
   constructor(private backendService: BackendService, private router: Router) {
     this.items = [];
     effect(() => {
-      this.getCompanyList(this.companyNo(), this.companyName(), this.industryId(), this.city(), this.totalEmployees(), this.parentCompany());
+      this.getCompanyList(this.companyNo(), this.companyName(), this.industryId(), this.city(), this.totalEmployees(), this.parentCompany(), this.pageIndex());
     })
   }
 
   ngOnInit() {
-    // this.getCompanyList();
+    
   }
 
   ngOnDestroy() {
@@ -46,7 +49,20 @@ export class CompanyListComponent implements OnInit, OnDestroy {
     if (this.unsubDdlList) this.unsubDdlList.unsubscribe();
   }
 
-  getCompanyList(companyNo?: number, companyName?: string, industryId?: number, city?: string, totalEmployees?: number, parentCompany?: string, pageIndex = 1, pageSize = 5) {
+  incrementPageIndex(event: MouseEvent) {
+    event.stopPropagation();
+    const furtherPagesAvailable = Math.ceil(this.totalCount / this.PAGE_SIZE);
+    if (this.pageIndex() === furtherPagesAvailable) return;
+    this.pageIndex$.set(this.pageIndex() + 1);
+  }
+
+  decrementPageIndex(event: MouseEvent) {
+    event.stopPropagation();
+    if (this.pageIndex() === 1) return;
+    this.pageIndex$.set(this.pageIndex() - 1);
+  }
+
+  getCompanyList(companyNo?: number, companyName?: string, industryId?: number, city?: string, totalEmployees?: number, parentCompany?: string, pageIndex = 1, pageSize = this.PAGE_SIZE) {
     this.unsubDdlList = this.backendService.getCompanyList({ sortByCompanyNameDesc: this.sortByCompanyNameDesc, pageIndex, pageSize, 
               companyNo, companyName, industryId, city, parentCompany, totalEmployees })
       .subscribe(list => {
