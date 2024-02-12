@@ -1,17 +1,14 @@
-import { Component, Input, OnDestroy, OnInit, Signal, input, signal } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectChange, MatSelectModule } from '@angular/material/select';
-import { BackendService } from '../../services/backend.service';
+import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
 import { Subscription } from 'rxjs';
+
+import { BackendService } from '../../services/backend.service';
 import { IndustryDto } from '../../utils/objects/Industry';
 import { CompanyDdlDto } from '../../utils/objects/Company';
 
 @Component({
   selector: 'app-company-search-filter',
   standalone: true,
-  imports: [MatSelectModule, MatFormFieldModule, MatInputModule, MatButtonModule],
+  imports: [],
   templateUrl: './company-search-filter.component.html',
   styleUrl: './company-search-filter.component.scss'
 })
@@ -23,24 +20,24 @@ export class CompanySearchFilterComponent implements OnInit, OnDestroy {
   industryList: IndustryDto[] = [];
   companyList: CompanyDdlDto[] = [];
 
-  @Input() companyNo = signal<number|undefined>(undefined);
-  @Input() companyName = signal<string|undefined>(undefined);
-  @Input() industryId = signal<number|undefined>(undefined);
-  @Input() city = signal<string|undefined>(undefined);
-  @Input() totalEmployees = signal<number|undefined>(undefined);
-  @Input() parentCompany = signal<string|undefined>(undefined);
-  
-  constructor(private backendService: BackendService) {}
+  @Input() companyNo = signal<number | undefined>(undefined);
+  @Input() companyName = signal<string | undefined>(undefined);
+  @Input() industryId = signal<number | undefined>(undefined);
+  @Input() city = signal<string | undefined>(undefined);
+  @Input() totalEmployees = signal<number | undefined>(undefined);
+  @Input() parentCompany = signal<string | undefined>(undefined);
+
+  constructor(private backendService: BackendService) { }
 
   ngOnDestroy(): void {
-        if (this.companyDdlSubs) this.companyDdlSubs.unsubscribe();
+    if (this.companyDdlSubs) this.companyDdlSubs.unsubscribe();
     if (this.industryDdlSubs) this.industryDdlSubs.unsubscribe();
   }
   ngOnInit(): void {
     this.getCompanyDdl();
     this.getIndustryDdl();
   }
-  
+
   getCompanyDdl() {
     this.companyDdlSubs = this.backendService.getCompanyListForDdl()
       .subscribe(list => {
@@ -67,8 +64,11 @@ export class CompanySearchFilterComponent implements OnInit, OnDestroy {
     this.companyName.set(val);
   }
 
-  onIndustryChange(changed: MatSelectChange) {
-    const value = changed.value;
+  onIndustryChange(event: Event) {
+    // event.preventDefault();
+    const industryId = Number((event.target as HTMLOptionElement).value);
+    // console.log(" industryId change: ", industryId)
+    const value = industryId;
     this.industryId.set(+value);
   }
 
@@ -82,9 +82,9 @@ export class CompanySearchFilterComponent implements OnInit, OnDestroy {
     this.totalEmployees.set(+val);
   }
 
-  onParentCompanyChange(changed: MatSelectChange) {
-    const value = changed.value;
-    this.parentCompany.set(value);
+  onParentCompanyChange(event: Event) {
+    const parentComp = (event.target as HTMLOptionElement).value;
+    this.parentCompany.set(parentComp);
   }
 
 }

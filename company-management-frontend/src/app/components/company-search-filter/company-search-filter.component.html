@@ -1,42 +1,48 @@
+<!-- Grid -->
+<details open>
+    <summary>Filter Options</summary>
 
-<div>
-    <mat-form-field appearance="outline">
-        <mat-label>Company no.</mat-label>
-        <input matInput #input type="number" (change)="onCompanyNoChange($event)">
-    </mat-form-field>
+    <article class="grid">
 
-    <mat-form-field appearance="outline">
-        <mat-label>Company name</mat-label>
-        <input matInput #input maxlength="50" (change)="onCompanyNameChange($event)">
-    </mat-form-field>
+        <!-- Markup example 1: input is inside label -->
+        <label for="companyNo">
+            Company no.
+            <input type="number" id="companyNo" (keyup)="onCompanyNoChange($event)">
+        </label>
 
-    <mat-form-field appearance="outline">
-        <mat-label>Industry</mat-label>
-        <mat-select (selectionChange)="onIndustryChange($event)">
-            <mat-option [value]="0">Please Select</mat-option>
-            @for (industry of industryList; track industry;) {
-            <mat-option [value]="industry.id">{{industry.name}}</mat-option>
-            }
-        </mat-select>
-    </mat-form-field>
+        <label for="companyName">
+            Company name
+            <input id="companyName" maxlength="50" (keyup)="onCompanyNameChange($event)">
+        </label>
 
-    <mat-form-field appearance="outline">
-        <mat-label>Number of employees</mat-label>
-        <input matInput #input type="number" (change)="onTotalEmployeeChange($event)">
-    </mat-form-field>
+        <label for="industry">
+            Industry
+            <select required role="list" id="industry" (click)="onIndustryChange($event)">
+                <option [value]="0">Select</option>
+                @for (item of industryList; track item.id;) {
+                <option [value]="item.id">{{item.name}}</option>
+                }
+            </select>
+        </label>
 
-    <mat-form-field appearance="outline">
-        <mat-label>City</mat-label>
-        <input matInput #input (change)="onCityChange($event)">
-    </mat-form-field>
+        <label for="employeeCount">
+            Total employees
+            <input id="employeeCount" type="number" (keyup)="onTotalEmployeeChange($event)">
+        </label>
 
-    <mat-form-field appearance="outline">
-        <mat-label>Parent company</mat-label>
-        <mat-select (selectionChange)="onParentCompanyChange($event)">
-            <mat-option [value]='"None"'>None</mat-option>
-            @for (comp of companyList; track comp;) {
-            <mat-option [value]="comp.name">{{comp.name}}</mat-option>
-            }
-        </mat-select>
-    </mat-form-field>
-</div>
+        <label for="city">
+            City
+            <input id="city" maxlength="50" (keyup)="onCityChange($event)">
+        </label>
+
+        <label for="parentCompany">
+            Parent company
+            <select required role="list" id="parentCompany" (click)="onParentCompanyChange($event)">
+                <option value="None">Select</option>
+                @for (item of companyList; track item.id;) {
+                <option [value]="item.name">{{item.name}}</option>
+                }
+            </select>
+        </label>
+    </article>
+</details>

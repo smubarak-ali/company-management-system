@@ -8,6 +8,10 @@ article {
     td {
         --font-size: 15px;
     }
+    
+    tr {
+        cursor: pointer;
+    }
 
     .pagination {
         display: flex;
