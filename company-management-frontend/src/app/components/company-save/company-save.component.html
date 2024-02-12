@@ -1,62 +1,47 @@
-<form (ngSubmit)="onFormSubmit($event)" [formGroup]="companyForm">
+<article>
+    <form [formGroup]="companyForm" #form>
+        <label for="companyName">
+            Company name
+            <input #input id="companyName" maxlength="50" placeholder="" required="" formControlName="companyName"
+                [attr.aria-invalid]="companyName.invalid">
+            <small>Only alphanumeric and max 50 characters ({{input.value.length}}/50)</small>
+        </label>
 
-    <div>
-        <mat-form-field hintLabel="Only alphanumeric and max 50 characters">
-            <mat-label>Enter company name</mat-label>
-            <input matInput #input maxlength="50" placeholder="" required="" formControlName="companyName">
-            <mat-hint align="end">{{input.value.length}}/50</mat-hint>
-            @if (companyForm.controls['companyName'].invalid) {
-            <mat-error>{{getErrorMessage()}}</mat-error>
-            }
-        </mat-form-field>
-    </div>
-
-    <div>
-        <mat-form-field>
-            <mat-label>Industry</mat-label>
-            <mat-select formControlName="industry" required>
-                <mat-option [value]="0">Please Select</mat-option>
-                @for (industry of industryList; track industry;) {
-                <mat-option [value]="industry.id">{{industry.name}}</mat-option>
+        <label for="industry">
+            Industry
+            <select required formControlName="industry" role="list" [attr.aria-invalid]="industry.invalid">
+                @for (item of industryList; track item.id;) {
+                <option [value]="item.id">{{item.name}}</option>
                 }
-            </mat-select>
-        </mat-form-field>
-    </div>
+            </select>
+        </label>
 
-    <div>
-        <mat-form-field hintLabel="Must be greater than 0 and less than 1 million">
-            <mat-label>Enter number of employees</mat-label>
-            <input matInput #input type="number" formControlName="employeeCount">
-            @if (companyForm.controls['employeeCount'].invalid) {
-            <mat-error>{{getErrorMessage()}}</mat-error>
-            }
-        </mat-form-field>
-    </div>
+        <label for="employeeCount">
+            Number of employees
+            <input id="employeeCount" placeholder="" required="" formControlName="employeeCount"
+                [attr.aria-invalid]="employeeCount.invalid">
+            <small>Must be greater than 0 and less than 1 million</small>
+        </label>
 
-    <div>
-        <mat-form-field hintLabel="Only alphabets and hyphen and max 50 characters">
-            <mat-label>Enter city</mat-label>
-            <input matInput #input formControlName="city">
-            @if (companyForm.controls['city'].invalid) {
-            <mat-error>{{getErrorMessage()}}</mat-error>
-            }
-        </mat-form-field>
-    </div>
+        <label for="city">
+            City
+            <input #cityInput id="city" maxlength="50" placeholder="" required="" formControlName="city"
+                [attr.aria-invalid]="city.invalid">
+            <small>Only alphabets and hyphen and max 50 characters ({{cityInput.value.length}}/50)</small>
+        </label>
 
-    <div>
-        <mat-form-field>
-            <mat-label>Select parent company</mat-label>
-            <mat-select formControlName="parentCompany">
-                <mat-option [value]='"None"'>None</mat-option>
-                @for (comp of companyList; track comp;) {
-                <mat-option [value]="comp.name">{{comp.name}}</mat-option>
+        <label for="parentCompany">
+            Industry
+            <select required formControlName="parentCompany" [attr.aria-invalid]="parentCompany.invalid">
+                @for (item of companyList; track item.id;) {
+                <option [value]="item.id">{{item.name}}</option>
                 }
-            </mat-select>
-        </mat-form-field>
-    </div>
+            </select>
+        </label>
 
-    <div>
-        <button mat-raised-button color="primary" type="submit" class="mr-5" [disabled]="!companyForm.valid">Save</button>
-        <button mat-raised-button (click)="cancel()">Cancel</button>
-    </div>
-</form>
+        <div class="pagination">
+            <a class="contrast" href="#" role="button" (click)="onFormSubmit($event)">Submit</a>
+            <a class="contrast" href="#" role="button" routerLink="/dashboard/list">Cancel</a>
+        </div>
+    </form>
+</article>

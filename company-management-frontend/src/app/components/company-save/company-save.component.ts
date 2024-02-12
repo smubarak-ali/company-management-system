@@ -1,24 +1,21 @@
 import { HttpClientModule } from '@angular/common/http';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, FormControl, ReactiveFormsModule, Validators, MaxLengthValidator, FormBuilder, AbstractControl } from '@angular/forms';
-import { MatSelectModule } from '@angular/material/select';
+import { AfterContentChecked, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { FormGroup, FormControl, ReactiveFormsModule, Validators, FormBuilder } from '@angular/forms';
 import { BackendService } from '../../services/backend.service';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatButtonModule } from '@angular/material/button';
 import { Subscription } from 'rxjs';
 import { IndustryDto } from '../../utils/objects/Industry';
 import { CompanyDdlDto, CompanyDto, CompanySaveDto } from '../../utils/objects/Company';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-company-save',
   standalone: true,
-  imports: [ReactiveFormsModule, HttpClientModule, MatSelectModule, MatFormFieldModule, MatInputModule, MatButtonModule],
+  imports: [ReactiveFormsModule, HttpClientModule],
   templateUrl: './company-save.component.html',
   styleUrl: './company-save.component.scss'
 })
-export class CompanySaveComponent implements OnInit, OnDestroy {
+export class CompanySaveComponent implements OnInit, OnDestroy, AfterContentChecked {
 
   @Input('companyId') companyId = 0;
 
@@ -29,19 +26,28 @@ export class CompanySaveComponent implements OnInit, OnDestroy {
 
   industryList: IndustryDto[] = [];
   companyList: CompanyDdlDto[] = [];
-  
+
   isEditMode = false;
 
   companyForm: FormGroup;
+  companyName = new FormControl('', [Validators.required, Validators.pattern('[a-z A-Z]+')]);
+  industry = new FormControl(0, [Validators.min(1), Validators.required]);
+  employeeCount = new FormControl(0, [Validators.required, Validators.min(1), Validators.max(1000000)]);
+  city = new FormControl('', [Validators.pattern('[a-z A-Z-]+'), Validators.maxLength(50)]);
+  parentCompany = new FormControl('None');
 
-  constructor(private formBuilder: FormBuilder, private backendService: BackendService, private router: Router) {
+  constructor(private formBuilder: FormBuilder, private backendService: BackendService, private router: Router, private changeDetector: ChangeDetectorRef) {
     this.companyForm = this.formBuilder.group({
-      companyName: ['', [Validators.required, Validators.pattern('[a-z A-Z]+')]],
-      industry: [0, [Validators.min(1), Validators.required]],
-      employeeCount: [0, [Validators.required, Validators.min(1), Validators.max(1000000)]],
-      city: ['', [Validators.pattern('[a-z A-Z-]+'), Validators.maxLength(50)]],
-      parentCompany: ['None']
+      companyName: this.companyName,
+      industry: this.industry,
+      employeeCount: this.employeeCount,
+      city: this.city,
+      parentCompany: this.parentCompany
     });
+  }
+
+  ngAfterContentChecked() {
+    this.changeDetector.detectChanges();
   }
 
   ngOnInit() {
@@ -63,11 +69,11 @@ export class CompanySaveComponent implements OnInit, OnDestroy {
   getCompanyById(id: number) {
     this.editCompanyDtoSubs = this.backendService.getCompanyById(id)
       .subscribe(res => {
-        this.companyForm.controls['companyName'].patchValue(res.companyName);
-        this.companyForm.controls['industry'].patchValue(res.industryId);
-        this.companyForm.controls['employeeCount'].patchValue(res.totalEmployees);
-        this.companyForm.controls['city'].patchValue(res.city);
-        this.companyForm.controls['parentCompany'].patchValue(res.parentCompany);
+        this.companyName.patchValue(res.companyName);
+        this.industry.patchValue(res.industryId);
+        this.employeeCount.patchValue(res.totalEmployees);
+        this.city.patchValue(res.city);
+        this.parentCompany.patchValue(res.parentCompany);
       });
   }
 
@@ -87,8 +93,9 @@ export class CompanySaveComponent implements OnInit, OnDestroy {
       });
   }
 
-  onFormSubmit(event: Event) {
+  onFormSubmit(event: MouseEvent) {
     event.preventDefault();
+    console.log(" companyForm: ", this.companyForm.valid);
     if (this.companyForm.invalid) return;
 
     const formData = this.companyForm.value;

@@ -1,8 +1,20 @@
-div {
-    padding-top: 15px;
-    padding-bottom: 15px;
+article {
+    margin: 0 0;
+    --block-spacing-vertical: 2rem;
 
-    mat-form-field {
-        width: 100%;
+    small {
+        --font-size: 0.75rem;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        button {
+            // margin: 3px 3px;
+            font-size: 0.8rem;
+            // text-decoration: none;
+        }
     }
 }
