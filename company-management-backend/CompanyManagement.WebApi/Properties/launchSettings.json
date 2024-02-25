@@ -1,4 +1,18 @@
-﻿{
+{
+  "profiles": {
+    "api": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "CONNECTION_STR": "Host=localhost; Database=company-management; Username=mubarak; Password=mubarak@123",
+        "ApiKey": "mubarak"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:5000"
+    }
+  },
   "$schema": "http://json.schemastore.org/launchsettings.json",
   "iisSettings": {
     "windowsAuthentication": false,
@@ -6,21 +20,6 @@
     "iisExpress": {
       "applicationUrl": "http://localhost:56293",
       "sslPort": 0
-    }
-  },
-  "profiles": {
-    "api": {
-      "commandName": "Project",
-      "dotnetRunMessages": true,
-      "launchBrowser": true,
-      "launchUrl": "swagger",
-      "applicationUrl": "http://localhost:5001",
-      "environmentVariables": {
-        "ASPNETCORE_URLS": "http://localhost:5001",
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "CONNECTION_STR": "Host=localhost; Database=company-management; Username=mubarak; Password=mubarak@123",
-        "ApiKey": "mubarak"
-      }
     }
   }
 }

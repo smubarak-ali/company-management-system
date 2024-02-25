@@ -11,17 +11,14 @@ namespace CompanyManagement.Repository.Repository.Implementation
     {
         private readonly ManagementDbContext _dbContext;
 
-        public CompanyRepository(ManagementDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
+        public CompanyRepository(ManagementDbContext dbContext) => _dbContext = dbContext;
 
-        public async Task<Company?> GetById(int id)
+        public async Task<Company?> GetById(int id, CancellationToken cancellationToken = default)
         {
             return await _dbContext.Company.Where(x => Equals(x.Id, id)).FirstOrDefaultAsync();
         }
 
-        public async Task<PaginatedList<Company>> GetCompanies(CompanySearchCriteria criteria)
+        public async Task<PaginatedList<Company>> GetCompanies(CompanySearchCriteria criteria, CancellationToken cancellationToken = default)
         {
             var companies = _dbContext.Company.Include(x => x.Industry).Select(x => x);
             if (!string.IsNullOrEmpty(criteria.ParentCompany))
@@ -51,7 +48,6 @@ namespace CompanyManagement.Repository.Repository.Implementation
 
             companies = criteria.CompanyNameDesc ? companies.OrderByDescending(x => x.CompanyName) : companies.OrderBy(x => x.CompanyName);
 
-
             var list = await PaginatedList<Company>.GetAsync(companies.AsNoTracking(), criteria.PageIndex, criteria.PageSize);
             return list;
         }
@@ -60,19 +56,19 @@ namespace CompanyManagement.Repository.Repository.Implementation
         /// Created this method to only get the id and name for performance reasons
         /// </summary>
         /// <returns></returns>
-        public async Task<ICollection<Company>> GetCompaniesForDropdown()
+        public async Task<ICollection<Company>> GetCompaniesForDropdown(CancellationToken cancellationToken = default)
         {
             return await _dbContext.Company.Select(x => new Company { Id = x.Id, CompanyName = x.CompanyName }).ToListAsync();
         }
 
-        public async Task<int> SaveCompany(Company company)
+        public async Task<int> SaveCompany(Company company, CancellationToken cancellationToken = default)
         {
             await _dbContext.Company.AddAsync(company);
             await _dbContext.SaveChangesAsync();
             return company.Id;
         }
 
-        public async Task UpdateCompany(int companyId, Company company)
+        public async Task UpdateCompany(int companyId, Company company, CancellationToken cancellationToken = default)
         {
             Company? entity = await _dbContext.Company.Where(x => Equals(x.Id, companyId)).FirstOrDefaultAsync();
 

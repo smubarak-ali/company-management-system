@@ -17,6 +17,9 @@ namespace CompanyManagement.WebApi.Filter
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
+#if DEBUG
+            return;
+#endif
             string apiKey = context.HttpContext.Request.Headers[AuthConstants.ApiKeyHeaderName];
 
             if (!_apiKeyValidator.IsValid(apiKey))

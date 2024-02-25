@@ -11,10 +11,10 @@ namespace CompanyManagement.Repository.Repository.Interface
 {
     public interface ICompanyRepository
     {
-        Task<Company?> GetById(int id);
-        Task<PaginatedList<Company>> GetCompanies(CompanySearchCriteria criteria);
-        Task<ICollection<Company>> GetCompaniesForDropdown();
-        Task<int> SaveCompany(Company company);
-        Task UpdateCompany(int companyId, Company company);
+        Task<Company?> GetById(int id, CancellationToken cancellationToken = default);
+        Task<PaginatedList<Company>> GetCompanies(CompanySearchCriteria criteria, CancellationToken cancellationToken = default);
+        Task<ICollection<Company>> GetCompaniesForDropdown(CancellationToken cancellationToken = default);
+        Task<int> SaveCompany(Company company, CancellationToken cancellationToken = default);
+        Task UpdateCompany(int companyId, Company company, CancellationToken cancellationToken = default);
     }
 }

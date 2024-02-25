@@ -9,7 +9,7 @@ namespace CompanyManagement.Shared.Interface.Repository
 {
     public interface IIndustryRepository
     {
-        Task<ICollection<Industry>> GetIndustries();
+        Task<ICollection<Industry>> GetIndustriesAsync(CancellationToken cancellationToken = default);
 
     }
 }

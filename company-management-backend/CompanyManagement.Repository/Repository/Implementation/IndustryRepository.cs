@@ -19,9 +19,10 @@ namespace CompanyManagement.Repository.Repository.Implementation
             _dbContext = dbContext;
         }
 
-        public async Task<ICollection<Industry>> GetIndustries()
+        public async Task<ICollection<Industry>> GetIndustriesAsync(CancellationToken cancellationToken = default)
         {
-            return await _dbContext.Industry.ToListAsync();
+            return await _dbContext.Industry.ToListAsync(cancellationToken);
         }
+
     }
 }

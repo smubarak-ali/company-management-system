@@ -18,7 +18,6 @@ namespace CompanyManagement.Repository.Context
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
             builder.UseNpgsql(Environment.GetEnvironmentVariable("CONNECTION_STR"));
-            builder.LogTo(Console.WriteLine);
 
             base.OnConfiguring(builder);
         }

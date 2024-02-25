@@ -1,7 +1,10 @@
 ﻿using CompanyManagement.Service.Interface;
+using CompanyManagement.Shared.Dto;
 using CompanyManagement.WebApi.Attribute;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Service.Query;
 
 namespace CompanyManagement.WebApi.Controllers
 {
@@ -12,19 +15,22 @@ namespace CompanyManagement.WebApi.Controllers
     {
         private readonly IIndustryService _industryService;
         private readonly ILogger _logger;
+        private readonly ISender _sender;
 
-        public IndustryController(IIndustryService industryService, ILogger<IndustryController> logger)
+        public IndustryController(IIndustryService industryService, ILogger<IndustryController> logger, ISender sender)
         {
             _industryService = industryService;
             _logger = logger;
+            _sender = sender;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(CancellationToken cancellationToken)
         {
             try
             {
-                var list = await _industryService.GetIndustries();
+                var query = new GetIndustryQuery();
+                var list = await _sender.Send(query, cancellationToken);
                 return Ok(list);
             }
             catch (Exception ex)

@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  companymanagement.webapi:
+    image: ${DOCKER_REGISTRY-}companymanagementwebapi
+    build:
+      context: .
+      dockerfile: CompanyManagement.WebApi/Dockerfile
