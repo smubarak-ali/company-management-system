@@ -3,8 +3,10 @@ using CompanyManagement.Service.Interface;
 using CompanyManagement.Shared.Dto;
 using CompanyManagement.Shared.Exceptions;
 using CompanyManagement.WebApi.Attribute;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Service.Query;
 
 namespace CompanyManagement.WebApi.Controllers
 {
@@ -15,11 +17,13 @@ namespace CompanyManagement.WebApi.Controllers
     {
         private readonly ICompanyService _companyService;
         private readonly ILogger _logger;
+        private readonly ISender _sender;
 
-        public CompanyController(ICompanyService companyService, ILogger<CompanyController> logger)
+        public CompanyController(ICompanyService companyService, ILogger<CompanyController> logger, ISender sender)
         {
             _companyService = companyService;
             _logger = logger;
+            _sender = sender;
         }
 
         [HttpGet]
@@ -69,11 +73,12 @@ namespace CompanyManagement.WebApi.Controllers
 
 
         [HttpGet("ddl")]
-        public async Task<IActionResult> GetCompaniesForDropdown()
+        public async Task<IActionResult> GetCompaniesForDropdown(CancellationToken cancellationToken)
         {
             try
             {
-                var list = await _companyService.GetCompaniesForDropdown();
+                var query = new GetCompanyForDropdownQuery();
+                var list = await _sender.Send(query, cancellationToken);
                 return Ok(list);
             }
             catch (Exception ex)

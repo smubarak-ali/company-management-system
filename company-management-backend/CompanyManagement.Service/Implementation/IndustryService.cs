@@ -22,7 +22,7 @@ namespace CompanyManagement.Service.Implementation
 
         public async Task<ICollection<IndustryDto>> GetIndustries()
         {
-            var list = await _industryRepository.GetIndustries();
+            var list = await _industryRepository.GetIndustriesAsync();
             return list.ToDto();
         }
     }

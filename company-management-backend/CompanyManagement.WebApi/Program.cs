@@ -11,7 +11,7 @@ using Serilog;
 using Serilog.Exceptions;
 using Service;
 
-string outputTemplate = "[{Timestamp:yyyy-MM-dd HH:mm} {Level:u3} [PID={ProcessId} | CID={CorrelationId}]] - {Message:lj}{NewLine}{Exception} {Properties:j}";
+string outputTemplate = "[{Timestamp:yyyy-MM-dd HH:mm} {Level:u3} [PID={ProcessId} | CID={CorrelationId}]] - {Message:lj}{NewLine}{Exception} {Properties:j}{NewLine}";
 //var logger = new LoggerConfiguration()
 //                .MinimumLevel.Information()
 //                .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
