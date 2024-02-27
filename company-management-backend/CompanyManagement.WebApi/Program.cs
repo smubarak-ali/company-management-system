@@ -11,15 +11,7 @@ using Serilog;
 using Serilog.Exceptions;
 using Service;
 
-string outputTemplate = "[{Timestamp:yyyy-MM-dd HH:mm} {Level:u3} [PID={ProcessId} | CID={CorrelationId}]] - {Message:lj}{NewLine}{Exception} {Properties:j}{NewLine}";
-//var logger = new LoggerConfiguration()
-//                .MinimumLevel.Information()
-//                .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
-//                .MinimumLevel.Override("System", Serilog.Events.LogEventLevel.Warning)
-//                .WriteTo.Console(outputTemplate: outputTemplate)
-//                .Enrich.WithCorrelationId()
-//                .Enrich.FromLogContext()
-//                .CreateBootstrapLogger();
+string outputTemplate = "[{Timestamp:yyyy-MM-dd HH:mm:ss} TRACE={TraceId} {Level:u3}] - {Message}{NewLine}{Exception}";
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((context, loggerConfig) =>
@@ -29,8 +21,6 @@ builder.Host.UseSerilog((context, loggerConfig) =>
         .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
         .MinimumLevel.Override("Microsoft.AspNetCore", Serilog.Events.LogEventLevel.Warning)
         .WriteTo.Console(outputTemplate: outputTemplate)
-        .Enrich.WithCorrelationId()
-        .Enrich.WithProcessId()
         .Enrich.FromLogContext()
         .Enrich.WithExceptionDetails();
 });
@@ -44,7 +34,6 @@ builder.Services.AddCors(opt =>
     });
 });
 
-builder.Services.AddHttpContextAccessor();
 builder.Services.AddDbContext<ManagementDbContext>();
 builder.Services.AddSingleton<ApiKeyAuthorizationFilter>();
 builder.Services.AddSingleton<IApiKeyValidator, ApiKeyValidator>();
@@ -62,10 +51,10 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseSerilogRequestLogging();
 app.UseCors("DevelopmentPolicy");
 app.UseSwagger();
 app.UseSwaggerUI();
-app.UseSerilogRequestLogging();
 app.MapControllers();
 await ApplyMigration();
 app.Run();

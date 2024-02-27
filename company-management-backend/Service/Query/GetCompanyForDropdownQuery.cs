@@ -12,7 +12,7 @@ namespace Service.Query
     public record GetCompanyForDropdownQuery : IRequest<ICollection<CompanyDropdownDto>>;
 
 
-    public class GetCompanyForDropdown : IRequestHandler<GetCompanyForDropdownQuery, ICollection<CompanyDropdownDto>>
+    public sealed class GetCompanyForDropdown : IRequestHandler<GetCompanyForDropdownQuery, ICollection<CompanyDropdownDto>>
     {
         private readonly ICompanyRepository _companyRepository;
 

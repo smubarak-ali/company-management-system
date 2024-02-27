@@ -2,6 +2,7 @@
 using CompanyManagement.Repository.Entity;
 using CompanyManagement.Shared.Interface.Repository;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;

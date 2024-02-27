@@ -57,11 +57,12 @@ namespace CompanyManagement.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetCompanyById(int id)
+        public async Task<IActionResult> GetCompanyById(int id, CancellationToken cancellationToken = default)
         {
             try
             {
-                var comp = await _companyService.GetById(id);
+                var query = new GetCompanyByIdQuery(id);
+                var comp = await _sender.Send(query, cancellationToken);
                 return Ok(comp);
             }
             catch (Exception ex)
@@ -73,7 +74,7 @@ namespace CompanyManagement.WebApi.Controllers
 
 
         [HttpGet("ddl")]
-        public async Task<IActionResult> GetCompaniesForDropdown(CancellationToken cancellationToken)
+        public async Task<IActionResult> GetCompaniesForDropdown(CancellationToken cancellationToken = default)
         {
             try
             {
