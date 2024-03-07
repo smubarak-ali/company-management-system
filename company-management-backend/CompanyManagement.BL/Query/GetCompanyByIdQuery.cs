@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service.Query
+namespace CompanyManagement.BL.Query
 {
     public record GetCompanyByIdQuery(int companyId) : IRequest<CompanyDto?>;
 

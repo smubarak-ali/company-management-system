@@ -18,9 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CompanyManagement.BL\CompanyManagement.BL.csproj" />
     <ProjectReference Include="..\CompanyManagement.Repository\CompanyManagement.Repository.csproj" />
     <ProjectReference Include="..\CompanyManagement.Service\CompanyManagement.Service.csproj" />
-    <ProjectReference Include="..\Service\Service.csproj" />
   </ItemGroup>
 
   <ItemGroup>

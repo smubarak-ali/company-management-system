@@ -1,4 +1,6 @@
-﻿using CompanyManagement.Criteria;
+﻿using CompanyManagement.BL.Command;
+using CompanyManagement.BL.Query;
+using CompanyManagement.Criteria;
 using CompanyManagement.Service.Interface;
 using CompanyManagement.Shared.Dto;
 using CompanyManagement.Shared.Exceptions;
@@ -6,7 +8,6 @@ using CompanyManagement.WebApi.Attribute;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Service.Query;
 
 namespace CompanyManagement.WebApi.Controllers
 {
@@ -94,7 +95,8 @@ namespace CompanyManagement.WebApi.Controllers
         {
             try
             {
-                var id = await _companyService.InsertCompany(company);
+                var command = new InsertCompanyCommand(company);
+                var id = await _sender.Send(command);
                 return Created("", id);
             }
             catch (Exception ex)
@@ -109,7 +111,8 @@ namespace CompanyManagement.WebApi.Controllers
         {
             try
             {
-                 await _companyService.UpdateCompany(id, company);
+                var command = new UpdateCompanyCommand(id, company);
+                 await _sender.Send(command);
                 return Ok();
             }
             catch (InvalidIdException ex)

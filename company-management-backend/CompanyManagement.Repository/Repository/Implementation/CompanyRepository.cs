@@ -7,11 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CompanyManagement.Repository.Repository.Implementation
 {
-    public class CompanyRepository : ICompanyRepository
+    public class CompanyRepository(ManagementDbContext dbContext) : ICompanyRepository
     {
-        private readonly ManagementDbContext _dbContext;
-
-        public CompanyRepository(ManagementDbContext dbContext) => _dbContext = dbContext;
+        private readonly ManagementDbContext _dbContext = dbContext;
 
         public async Task<Company?> GetById(int id, CancellationToken cancellationToken = default)
         {
@@ -58,7 +56,7 @@ namespace CompanyManagement.Repository.Repository.Implementation
         /// <returns></returns>
         public async Task<ICollection<Company>> GetCompaniesForDropdown(CancellationToken cancellationToken = default)
         {
-            return await _dbContext.Company.Select(x => new Company { Id = x.Id, CompanyName = x.CompanyName }).ToListAsync();
+            return await _dbContext.Company.Select(x => new Company { Id = x.Id, CompanyName = x.CompanyName }).ToListAsync(cancellationToken: cancellationToken);
         }
 
         public async Task<int> SaveCompany(Company company, CancellationToken cancellationToken = default)

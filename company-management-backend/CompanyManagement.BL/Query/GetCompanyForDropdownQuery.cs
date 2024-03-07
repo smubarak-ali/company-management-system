@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service.Query
+namespace CompanyManagement.BL.Query
 {
     public record GetCompanyForDropdownQuery : IRequest<ICollection<CompanyDropdownDto>>;
 

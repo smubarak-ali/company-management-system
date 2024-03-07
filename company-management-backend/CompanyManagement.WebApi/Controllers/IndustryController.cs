@@ -1,10 +1,10 @@
-﻿using CompanyManagement.Service.Interface;
+﻿using CompanyManagement.BL.Query;
+using CompanyManagement.Service.Interface;
 using CompanyManagement.Shared.Dto;
 using CompanyManagement.WebApi.Attribute;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Service.Query;
 
 namespace CompanyManagement.WebApi.Controllers
 {

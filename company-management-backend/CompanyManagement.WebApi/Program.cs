@@ -1,3 +1,4 @@
+using CompanyManagement.BL;
 using CompanyManagement.Repository.Context;
 using CompanyManagement.Repository.Repository.Implementation;
 using CompanyManagement.Repository.Repository.Interface;
@@ -9,7 +10,6 @@ using CompanyManagement.WebApi.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Exceptions;
-using Service;
 
 string outputTemplate = "[{Timestamp:yyyy-MM-dd HH:mm:ss} TRACE={TraceId} {Level:u3}] - {Message}{NewLine}{Exception}";
 

@@ -3,7 +3,7 @@ using CompanyManagement.Shared.Interface.Repository;
 using MediatR;
 using Serilog;
 
-namespace Service.Query
+namespace CompanyManagement.BL.Query
 {
     public record GetIndustryQuery : IRequest<ICollection<IndustryDto>>;
 

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service.Query
+namespace CompanyManagement.BL
 {
-    internal class GetCompanyByCriteriaQuery
+    public sealed class MediatorEntryPointHelper
     {
     }
 }
