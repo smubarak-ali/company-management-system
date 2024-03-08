@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option csharp_namespace = "CompanyManagement.Grpc";
+
+package industry;
+
+// The greeting service definition.
+service IndustrySrv {
+  // Sends a greeting
+  rpc GetIndustries (IndustryRequest) returns (IndustryReply);
+}
+
+message IndustryRequest {
+}
+
+message IndustryReply {
+	repeated Industry list = 1;
+}
+
+// The response message containing the greetings.
+message Industry {
+  int32 id = 1;
+  string name = 2;
+}

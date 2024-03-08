@@ -1,4 +1,5 @@
 using CompanyManagement.BL;
+using CompanyManagement.Grpc.Services;
 using CompanyManagement.Repository.Context;
 using CompanyManagement.Repository.Repository.Implementation;
 using CompanyManagement.Repository.Repository.Interface;
@@ -43,6 +44,8 @@ builder.Services.AddScoped<IIndustryService, IndustryService>();
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 builder.Services.AddScoped<ICompanyService, CompanyService>();
 
+builder.Services.AddGrpc();
+
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(MediatorEntryPointHelper).Assembly));
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -55,6 +58,7 @@ app.UseSerilogRequestLogging();
 app.UseCors("DevelopmentPolicy");
 app.UseSwagger();
 app.UseSwaggerUI();
+app.MapGrpcService<GrpcIndustryService>();
 app.MapControllers();
 await ApplyMigration();
 app.Run();
